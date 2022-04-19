@@ -295,6 +295,7 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
                 street = street.replace(':',' ')
                 street_num = street.find('City')
                 street = street[:street_num].strip()
+                street =  " ".join(street.split())
             except:
                 street = '-'
 
@@ -321,6 +322,7 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
         #         "Team Colors": t_color
         #         }
         # else:
+    
         data_each_team = {
             "Region": continent,
             "League": league_name,
