@@ -301,7 +301,7 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
             if fax_n == '':
                 fax_n = '-'
           
-            phon_n = phon_n.strip()
+            phone_n = str(phone_n).strip()
             #-----Street-------------------------------------------
             try:
                 street = e.replace('Tel:','').replace('..','.').replace('+','').replace('fax.','').replace('fax','').replace('Telefon','').replace(phone_n,'').replace(fax_n,'').replace('Tel:','').replace('Tel','').replace('Tel.','').replace('Tel.:','').replace('tel','').replace('M:','').replace('Telephone:','').replace('T:','').replace('T.','').replace('Tel/Fax','').replace('Tél.','').replace('Tél','').replace('Télephone','').replace('Phone','').replace('Phone&Fax','').replace('Phone:','').replace('Fax','').replace('Fax:','').replace('F:','').strip()
