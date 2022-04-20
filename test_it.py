@@ -1,8 +1,6 @@
-from dataclasses import replace
 import requests
 from bs4 import BeautifulSoup as bs
 import json
-import os 
 from time import sleep
 import sys
 
