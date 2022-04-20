@@ -500,16 +500,16 @@ def scrape(continent,GENDER,co_list):
 # scrape('Europe','male',europe_co_list)
 # scrape('Europe','female',europe_co_list)
 
-scrape('L.America','male',l_america_co_list)
-scrape('L.America','female',l_america_co_list)
+# scrape('L.America','male',l_america_co_list)
+# scrape('L.America','female',l_america_co_list)
 
-scrape('Asia','male',asia_co_list)
-scrape('Asia','female',asia_co_list)
+# scrape('Asia','male',asia_co_list)
+# scrape('Asia','female',asia_co_list)
 
-scrape('Oceania','male',oceania_co_list)
-scrape('Oceania','female',oceania_co_list)
+# scrape('Oceania','male',oceania_co_list)
+# scrape('Oceania','female',oceania_co_list)
 
-scrape('Africa','male',africa_co_list)
+# scrape('Africa','male',africa_co_list)
 scrape('Africa','female',africa_co_list)
 
 
