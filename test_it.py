@@ -1,3 +1,4 @@
+from dataclasses import replace
 import requests
 from bs4 import BeautifulSoup as bs
 import json
@@ -221,6 +222,12 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
                     phone = '-'
                 else:
                     phone = e[phon_n+3:].strip()
+            if phone == '-':
+                phon_n = e.find('+')
+                if phon_n == -1:
+                    phone = '-'
+                else:
+                    phone = e[phon_n+1:].strip()
 
 
             phone_n = ''  
@@ -236,6 +243,8 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
                 elif each == '(':
                     phone_n = phone_n + each
                 elif each == ')':
+                    phone_n = phone_n + each
+                elif each == ',':
                     phone_n = phone_n + each
                 elif each.isdigit():
                     phone_n = phone_n + each
@@ -267,6 +276,12 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
                     fax = '-'
                 else:
                     fax = e[fax_n+2:].strip()
+            if fax == '-':
+                fax_n = e.find('fax')
+                if fax_n == -1:
+                    fax = '-'
+                else:
+                    fax = e[fax_n+4:].strip()
             fax_n = ''  
             for each in fax:
                 if each == '+':
@@ -288,11 +303,11 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
             if fax_n == '':
                 fax_n = '-'
           
-            
+            phon_n = phon_n.strip()
             #-----Street-------------------------------------------
             try:
-                street = e.replace('Tel:','').replace('Telefon','').replace(phone_n,'').replace(fax_n,'').replace('Tel:','').replace('Tel','').replace('Tel.','').replace('Tel.:','').replace('tel','').replace('M:','').replace('Telephone:','').replace('T:','').replace('T.','').replace('Tel/Fax','').replace('Tél.','').replace('Tél','').replace('Télephone','').replace('Phone','').replace('Phone&Fax','').replace('Phone:','').replace('Fax','').replace('Fax:','').replace('F:','').strip()
-                street = street.replace(':',' ')
+                street = e.replace('Tel:','').replace('..','.').replace('+','').replace('fax.','').replace('fax','').replace('Telefon','').replace(phone_n,'').replace(fax_n,'').replace('Tel:','').replace('Tel','').replace('Tel.','').replace('Tel.:','').replace('tel','').replace('M:','').replace('Telephone:','').replace('T:','').replace('T.','').replace('Tel/Fax','').replace('Tél.','').replace('Tél','').replace('Télephone','').replace('Phone','').replace('Phone&Fax','').replace('Phone:','').replace('Fax','').replace('Fax:','').replace('F:','').strip()
+                street = street.replace(':',' ').replace('. .','.').replace('. . ','.').replace(' .','.')
                 street_num = street.find('City')
                 street = street[:street_num].strip()
                 street =  " ".join(street.split())
@@ -302,27 +317,7 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
         city = city.strip()
         coach = coach.strip()
         team_name = team_name.strip()
-        #_-------------------------------------------------------------------------------------------------------------------------
-        # if 'N.America' or 'EU EVENTS' in continent:
-        #     data_each_team = {
-        #         "Region": continent,
-        #         "League": league_name,
-        #         "Event": co_name,
-        #         "Team Name": team_name,
-        #         "Team Logo": team_logo,
-        #         # "URL": team_link,
-        #         "Address": street,
-        #         "City": city,
-        #         "Street": street,
-        #         "Phone": phone_n,
-        #         "Coach": coach,
-        #         "Website": website,
-        #         "Facebook": facebook,
-        #         "Twitter": twitter,
-        #         "Team Colors": t_color
-        #         }
-        # else:
-    
+
         data_each_team = {
             "Region": continent,
             "League": league_name,
@@ -355,8 +350,8 @@ def scraping_part(links,team_name_list,continent,co_name,GENDER):
             with open(f"{co_name}_{league_name}_{GENDER}.json", "w", encoding="utf-8-sig") as final:
                 json.dump(mylist, final,ensure_ascii=False, indent=4, separators=(", ", ": "), sort_keys=False)
             sleep(0.1)
-            # from google.colab import files
-            # files.download(f"{co_name}_{league_name}_{GENDER}.json")
+            
+            
             embed = DiscordEmbed(title=f'{continent}', description=f'''For country: {co_name}''')
             with open(f"{co_name}_{league_name}_{GENDER}.json", "rb") as f:
                 webhook.add_file(file=f.read(), filename=f"{co_name}_{league_name}_{GENDER}.json")
@@ -393,13 +388,6 @@ def scrape(continent,GENDER,co_list):
         else:
             co_link = co_link.replace('.aspx','-Teams.aspx') + '?women=1'
         print(f'Scraping continent: {continent};; country: {co_name};; link: {co_link} Gender: {GENDER}')
-#--------------making new folder---------------------------------------------------------
-        # directory = co_name
-        # try:
-        #     path = os.path.join(parent_dir, directory) 
-        #     os.mkdir(path) 
-        # except:
-        #     pass
 #--------Getting list of leagues---------------------------------------------------------------------
         r = requests.get(co_link,headers = headers)
         soup = bs(r.content,'html.parser')
@@ -510,8 +498,8 @@ def scrape(continent,GENDER,co_list):
 # scrape('Oceania','female',oceania_co_list)
 
 # scrape('Africa','male',africa_co_list)
-scrape('Africa','female',africa_co_list)
-
+# scrape('Africa','female',africa_co_list)
+#---------------before update---------------------------------------
 
 scrape('EU EVENTS','male',eu_events_ev_list)
 scrape('EU EVENTS','female',eu_events_ev_list)
