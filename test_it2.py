@@ -269,7 +269,7 @@ def category_scraper(url1):
     print('Finished, Finally!')
 
     sleep(0.5)
-    embed = DiscordEmbed(title=f'{mother_cate_name}', description=f'''Scraped File..''')
+    embed = DiscordEmbed(title=f'{mother_cate_name}', description=f'''--------Scraped File--------''')
     with open(f'priceline_category_{mother_cate_name}.csv', "rb") as f:
         webhook.add_file(file=f.read(), filename=f'priceline_category_{mother_cate_name}.csv')
     webhook.add_embed(embed)
@@ -284,10 +284,18 @@ def category_scraper(url1):
     
     
 # makeup   
-category_scraper(cate1_urls[0])
-# Hair
-# category_scraper(cate1_urls[1])
-# category_scraper(cate1_urls[2])
+# category_scraper(cate1_urls[0])
+category_scraper(cate1_urls[1])
+category_scraper(cate1_urls[2])
+category_scraper(cate1_urls[3])
+category_scraper(cate1_urls[4])
+category_scraper(cate1_urls[5])
+category_scraper(cate1_urls[6])
+# category_scraper(cate1_urls[7])
+# category_scraper(cate1_urls[8])
+# category_scraper(cate1_urls[9])
+# category_scraper(cate1_urls[10])
+# category_scraper(cate1_urls[11])
 
 
 
