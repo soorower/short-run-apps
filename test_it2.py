@@ -285,17 +285,17 @@ def category_scraper(url1):
     
 # makeup   
 # category_scraper(cate1_urls[0])
-category_scraper(cate1_urls[1])
-category_scraper(cate1_urls[2])
-category_scraper(cate1_urls[3])
-category_scraper(cate1_urls[4])
-category_scraper(cate1_urls[5])
-category_scraper(cate1_urls[6])
-# category_scraper(cate1_urls[7])
-# category_scraper(cate1_urls[8])
-# category_scraper(cate1_urls[9])
-# category_scraper(cate1_urls[10])
-# category_scraper(cate1_urls[11])
+# category_scraper(cate1_urls[1])
+# category_scraper(cate1_urls[2])
+# category_scraper(cate1_urls[3])
+# category_scraper(cate1_urls[4])
+# category_scraper(cate1_urls[5])
+# category_scraper(cate1_urls[6])
+category_scraper(cate1_urls[7])
+category_scraper(cate1_urls[8])
+category_scraper(cate1_urls[9])
+category_scraper(cate1_urls[10])
+category_scraper(cate1_urls[11])
 
 
 
