@@ -110,6 +110,9 @@ def product_scraper(mother_cate_name,child_cate1_name,child_cate2_name,links):
         except:
             prod_link = '-'
         datan = {
+            'Main Category': mother_cate_name,
+            'Sub Category': child_cate1_name,
+            'Child Category': child_cate2_name,
             'Product Link': prod_link,
             'Brand Name': brand_name,
             'Product Name': product_name,
