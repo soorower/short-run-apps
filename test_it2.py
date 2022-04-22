@@ -1,3 +1,4 @@
+import imghdr
 import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
@@ -9,7 +10,7 @@ webhook = DiscordWebhook(
 
 
 
-p_url = 'http://api.scrape.do?token=05485fefacab407eb70e12e0d48188f058cedc62a3a&url='
+p_url = 'http://api.scrape.do?token=ad3d00b0025842afb0f1620cf7f3301dd3ddcc23d1a&url='
 url = p_url + 'https://www.priceline.com.au/'
 r = requests.get(url)
 soup = bs(r.content,'html.parser')
@@ -88,7 +89,7 @@ def product_scraper(mother_cate_name,child_cate1_name,child_cate2_name,links):
             price = '-'
         if price == '-':
             try:
-                price = soup.find('p',attrs = {'class':'special-price'}).find('span',attrs={'class':'price'}).text.strip()
+                price = '$' + str(soup.find('p',attrs = {'class':'special-price'}).find('span',attrs={'class':'price'}).text.strip())
             except:
                 price = '-'
         try:
@@ -124,6 +125,14 @@ def product_scraper(mother_cate_name,child_cate1_name,child_cate2_name,links):
 
         }
         listan.append(datan)
+        prod_link = '-'
+        brand_name = '-'
+        product_name = '-'
+        price = '-'
+        sku = '-'
+        image = '-'
+        description = '-'
+        ingred  = '-'
     return listan
 
 
