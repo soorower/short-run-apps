@@ -145,6 +145,7 @@ def category_scraper(url1):
     child_cate1_urls = [x.find('span').find('a')['href'] for x in category_box[0].find('ul').findAll('li')]
     child_cate1_names = [x.find('span').find('a').text for x in category_box[0].find('ul').findAll('li')]
 
+    final_list = []
     #-----from child category 1, getting child category 2 links-----------------------
     for child_cate1_url,child_cate1_name in zip(child_cate1_urls,child_cate1_names):      # range!!
         url = p_url + str(child_cate1_url)
@@ -182,7 +183,7 @@ def category_scraper(url1):
             last_five = lists[i_list[-1]:]
             res_html = threading(last_five) # calling the thread
             final_res_html = final_res_html + res_html
-            sleep(0.5)
+            # sleep(0.5)
 
 
         
@@ -218,7 +219,7 @@ def category_scraper(url1):
                 last_five = lists[i_list[-1]:]
                 res_html = threading(last_five) # calling the thread
                 final_res_html2 = final_res_html2 + res_html
-                sleep(0.5)
+                # sleep(0.5)
 
 
             product_links_child_cate2 = []
@@ -234,24 +235,38 @@ def category_scraper(url1):
             scraped_dict_list = product_scraper(mother_cate_name,child_cate1_name,child_cate2_name,product_links_child_cate2)          # range!!
 
 
-            print('Almost Done!')
-            final_list = []
+            mini_final = []
+            print('This child category is scraped! Moving to the next one...')
             for dictt in scraped_dict_list:
                 final_list.append(dictt)
-
+                mini_final.append(dictt)
 
             df = pd.DataFrame(final_list)
-            df.to_csv(f'priceline_category_{mother_cate_name}.csv',encoding='utf-8-sig',index = False)
-            print('Finished, Finally!')
-
+            df.to_csv(f'priceline_category_{child_cate2_name}.csv',encoding='utf-8-sig',index = False)
+            
             sleep(0.5)
-            embed = DiscordEmbed(title=f'{mother_cate_name}', description=f'''Scraped File..''')
-            with open(f'priceline_category_{mother_cate_name}.csv', "rb") as f:
-                webhook.add_file(file=f.read(), filename=f'priceline_category_{mother_cate_name}.csv')
+            embed = DiscordEmbed(title=f'{child_cate2_name}', description=f'''Mini file from one child category''')
+            with open(f'priceline_category_{child_cate2_name}.csv', "rb") as f:
+                webhook.add_file(file=f.read(), filename=f'priceline_category_{child_cate2_name}.csv')
             webhook.add_embed(embed)
             response = webhook.execute()
             webhook.remove_embeds()
             webhook.remove_files()
+
+
+
+    df = pd.DataFrame(final_list)
+    df.to_csv(f'priceline_category_{mother_cate_name}.csv',encoding='utf-8-sig',index = False)
+    print('Finished, Finally!')
+
+    sleep(0.5)
+    embed = DiscordEmbed(title=f'{mother_cate_name}', description=f'''Scraped File..''')
+    with open(f'priceline_category_{mother_cate_name}.csv', "rb") as f:
+        webhook.add_file(file=f.read(), filename=f'priceline_category_{mother_cate_name}.csv')
+    webhook.add_embed(embed)
+    response = webhook.execute()
+    webhook.remove_embeds()
+    webhook.remove_files()
             
 
         
@@ -263,5 +278,7 @@ def category_scraper(url1):
 category_scraper(cate1_urls[0])
 # Hair
 # category_scraper(cate1_urls[1])
+# category_scraper(cate1_urls[2])
+
 
 
